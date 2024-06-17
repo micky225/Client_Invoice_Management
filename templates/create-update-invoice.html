@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Create & Update Invoice{% endblock title %}
+
+{% block content %}
+    <form method="POST" class="bg-white p-4 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+                <label for="first_name" class="block mb-2 text-sm font-medium">Recipient</label>
+                {{ form.recipient }}
+            </div>
+            <div>
+                <label for="last_name" class="block mb-2 text-sm font-medium ">Invoice Items</label>
+               {{ form.num_items }}
+            </div>
+            <div>
+                <label for="company" class="block mb-2 text-sm font-medium ">Expiration Date</label>
+                {{ form.expiration_date }}
+            </div>  
+            <div>
+                <label for="phone" class="block mb-2 text-sm font-medium ">Description</label>
+                {{ form.description }}
+            </div>     
+        </div>
+
+        <button type="submit" class="text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-gray-700">Submit</button>
+    </form>
+
+{% endblock content %}
