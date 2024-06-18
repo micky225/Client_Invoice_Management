@@ -2,9 +2,10 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
-from .models import Invoice
+from app.models import Invoice
 from .serializers import InvoiceSerializer
-from .tasks import process_csv_file
+from app.tasks import process_csv_file
+
 
 class InvoiceListView(generics.ListAPIView):
     queryset = Invoice.objects.all()

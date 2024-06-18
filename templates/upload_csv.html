@@ -5,10 +5,22 @@
 
 {% block content %}
 
-    <form method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto">
+    <form method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md">
         {% csrf_token %}
-        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" name="file" accept=".csv" required>
-        <button type="submit">Upload</button>
+        <div class="flex items-center rounded-t-lg  p-5 py-4 text-2xl text-gray-900 bg-gray-800 ">
+
+            <p class="font-medium  text-blue-600 dark:text-blue-500"> Upload CSV File</p>
+        </div>
+        <div class="p-5">
+            <div class="grid gap-6 p-2 mb-6 md:grid-cols-1">
+            <div>
+                <label for="first_name" class="block mb-3 text-xl font-medium">CSV File</label>
+                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" name="file" accept=".csv" required>
+            </div>   
+        </div>
+
+        <button type="submit" class="text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-gray-700">Upload</button>
+        </div>
     </form>
 
 {% endblock content %}

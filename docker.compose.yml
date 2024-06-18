@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_DB: postgress
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Micky2255
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    platform: linux/amd64
+    container_name: celery_worker
+    command: bash -c "python manage.py migrate && python manage.py collectstatic --noinput && python manage.py create_bot && gunicorn setup.wsgi:application --bind 0.0.0.0:8080 --workers 3"
+    volumes:
+      - .:/setup
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: postgress
+      DB_USER: postgres
+      DB_PASSWORD: Micky2255
+      DB_HOST: localhost
+      DB_PORT: 5432
+    env_file:
+      - setup/.env
+
+  celery:
+    build:
+      context: .
+      
+    command: celery -A setup worker --loglevel=info
+    volumes:
+      - .:/setup
+    depends_on:
+      - redis
+      - db
+    environment:
+      DB_NAME: postgress
+      DB_USER: postgres
+      DB_PASSWORD: Micky2255
+      DB_HOST: localhost
+      DB_PORT: 5432
+    env_file:
+      - setup/.env
+
+  celery-beat:
+    build:
+      context: .
+    container_name: celery_beat
+    command: celery -A setup beat --loglevel=info
+    volumes:
+      - .:/setup
+    depends_on:
+      - redis
+      - db
+    environment:
+      DB_NAME: postgress
+      DB_USER: postgres
+      DB_PASSWORD: Micky2255
+      DB_HOST: localhost
+      DB_PORT: 5432
+    env_file:
+      - setup/.env
+
+  redis:
+    image: redis:6-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

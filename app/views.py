@@ -6,7 +6,7 @@ from .tasks import process_csv_file
 
 def list_invoice(request):
     invoices = Invoice.objects.all()
-    paginator = Paginator(invoices, 10)
+    paginator = Paginator(invoices, 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'index.html', {"page_obj": page_obj})
