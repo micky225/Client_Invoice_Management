@@ -16,19 +16,16 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'CSV file generated successfully at {file_path}'))
 
     def random_date(self, start, end):
-        """Generate a random date between start and end."""
         return start + timedelta(days=random.randint(0, (end - start).days))
 
     def generate_csv(self, file_path, num_rows):
-        """Generate a CSV file with the given number of rows."""
         fieldnames = ['recipient', 'description', 'num_items', 'expiration_date']
         recipients = ['Amali Tech', 'Tech Corp', 'Innovate LLC', 'Future Solutions', 'Global Services']
         descriptions = ['Item in process', 'Item delivered', 'Pending approval', 'Awaiting shipment', 'Completed order']
-        num_items = range(1, 100)  # Random number of items between 1 and 99
+        num_items = range(1, 100)
         start_date = datetime.strptime('2024-01-01', '%Y-%m-%d')
         end_date = datetime.strptime('2024-12-31', '%Y-%m-%d')
 
-        # Ensure the directory exists
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
         with open(file_path, mode='w', newline='') as file:

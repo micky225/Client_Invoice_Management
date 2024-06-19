@@ -5,7 +5,12 @@ from .forms import InvoiceForm
 from .tasks import process_csv_file
 
 def list_invoice(request):
-    invoices = Invoice.objects.all()
+    search = request.GET.get('keywords','')
+    if search:
+        invoices=Invoice.objects.filter(invoice_code__icontains=search)
+    else:
+        invoices =Invoice.objects.all()
+
     paginator = Paginator(invoices, 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

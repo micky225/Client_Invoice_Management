@@ -8,9 +8,9 @@
 <div class="relative overflow-x-auto shadow-md rounded-xl">
     
     <div class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 p-5 py-4 text-lg text-gray-900 dark:bg-gray-800 ">
-        <div>
-            <input type="text" class="block rounded-md h-9 w-80 text-sm p-4" placeholder="Search for items">
-        </div>
+      <form action="" method="GET">
+            <input type="text" class="block rounded-md h-9 w-80 text-sm p-4" placeholder="Search for invoice code"  name="keywords" value="{{search}}">
+      </form>  
         <div class="flex">
            <a href="{% url "app:create" %}" class="font-medium  text-blue-600 dark:text-blue-500 hover:underline">Create Invoice</a> 
            <p class="text-white mx-3">|</p>
